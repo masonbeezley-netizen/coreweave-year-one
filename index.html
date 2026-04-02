@@ -1,1 +1,534 @@
-$(cat /dev/null)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoreWeave × Glean — A Year of Partnership</title>
+    <style>
+        :root {
+            --navy: #0a0e27;
+            --deep: #111638;
+            --accent: #4f6df5;
+            --accent-light: #7c8fff;
+            --purple: #7c5cfc;
+            --gold: #f5c542;
+            --green: #34c759;
+            --white: #fafafa;
+            --off-white: #f5f5f7;
+            --text: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --border: rgba(0,0,0,0.06);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; }
+
+        /* ── Hero ── */
+        .hero { min-height: 100vh; background: linear-gradient(160deg, #0a0e27 0%, #1a1f4e 40%, #2a2070 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 80px 24px; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at 30% 50%, rgba(79,109,245,0.12) 0%, transparent 60%), radial-gradient(ellipse at 70% 30%, rgba(124,92,252,0.08) 0%, transparent 50%); animation: aurora 20s ease-in-out infinite; }
+        @keyframes aurora { 0%, 100% { transform: translate(0,0) rotate(0deg); } 33% { transform: translate(2%,-1%) rotate(1deg); } 66% { transform: translate(-1%,2%) rotate(-1deg); } }
+        .hero-content { position: relative; z-index: 1; max-width: 780px; }
+        .hero-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+        .hero h1 { font-size: clamp(36px,6vw,64px); font-weight: 700; line-height: 1.08; color: #fff; margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
+        .hero h1 span { background: linear-gradient(135deg, var(--accent-light), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero-sub { font-size: clamp(16px,2.2vw,20px); line-height: 1.6; color: rgba(255,255,255,0.7); max-width: 560px; margin: 0 auto; opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
+        .hero-arrow { margin-top: 48px; opacity: 0; animation: fadeUp 0.8s 0.9s forwards, bounce 2s 1.5s infinite; }
+        .hero-arrow svg { width: 28px; height: 28px; stroke: rgba(255,255,255,0.4); }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+        /* ── Sections ── */
+        section { padding: 100px 24px; }
+        .container { max-width: 960px; margin: 0 auto; }
+        .section-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+        .section-title { font-size: clamp(28px,4vw,42px); font-weight: 700; line-height: 1.12; margin-bottom: 20px; }
+        .section-desc { font-size: 17px; line-height: 1.65; color: var(--text-secondary); max-width: 640px; }
+
+        /* ── Intro ── */
+        .intro { background: var(--off-white); }
+        .intro-text { font-size: 19px; line-height: 1.75; color: var(--text); max-width: 680px; }
+        .intro-text p + p { margin-top: 20px; }
+        .intro-names { margin-top: 32px; font-size: 15px; line-height: 1.7; color: var(--text-secondary); }
+        .intro-names strong { color: var(--text); }
+
+        /* ── Stats ── */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 24px; margin-top: 48px; }
+        .stat-card { background: #fff; border-radius: 16px; padding: 32px 28px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04); transition: transform 0.25s ease, box-shadow 0.25s ease; }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 16px 40px rgba(0,0,0,0.08); }
+        .stat-number { font-size: 44px; font-weight: 700; line-height: 1.1; background: linear-gradient(135deg, var(--accent), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .stat-label { font-size: 14px; font-weight: 500; color: var(--text-secondary); margin-top: 8px; }
+        .stat-detail { font-size: 12px; color: var(--green); font-weight: 600; margin-top: 6px; }
+
+        /* ── Timeline ── */
+        .timeline-section { background: var(--off-white); }
+        .timeline { margin-top: 48px; position: relative; padding-left: 40px; }
+        .timeline::before { content: ''; position: absolute; left: 14px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--accent), var(--purple)); border-radius: 2px; }
+        .timeline-item { position: relative; margin-bottom: 40px; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-dot { position: absolute; left: -33px; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); border: 3px solid var(--off-white); box-shadow: 0 0 0 2px var(--accent); }
+        .timeline-item.highlight .timeline-dot { background: var(--gold); box-shadow: 0 0 0 2px var(--gold), 0 0 12px rgba(245,197,66,0.3); }
+        .timeline-date { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+        .timeline-title { font-size: 18px; font-weight: 650; line-height: 1.3; margin-bottom: 6px; }
+        .timeline-desc { font-size: 15px; line-height: 1.6; color: var(--text-secondary); }
+        .timeline-emoji { font-size: 20px; margin-right: 6px; }
+
+        /* ── Agents ── */
+        .agents-section { background: linear-gradient(160deg, #0a0e27 0%, #1a1f4e 50%, #2a2070 100%); color: #fff; }
+        .agents-section .section-eyebrow { color: var(--gold); }
+        .agents-section .section-title { color: #fff; }
+        .agents-section .section-desc { color: rgba(255,255,255,0.6); }
+        .agents-highlight { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 20px; }
+        .agent-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 28px 24px; transition: background 0.2s ease; }
+        .agent-card:hover { background: rgba(255,255,255,0.1); }
+        .agent-icon { font-size: 28px; margin-bottom: 14px; }
+        .agent-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .agent-card p { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.6); }
+        .hackathon-callout { margin-top: 40px; background: rgba(245,197,66,0.12); border: 1px solid rgba(245,197,66,0.25); border-radius: 14px; padding: 28px 32px; }
+        .hackathon-callout h4 { font-size: 18px; font-weight: 650; color: var(--gold); margin-bottom: 8px; }
+        .hackathon-callout p { font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.7); }
+
+        /* ── Cowork ── */
+        .cowork-section { background: var(--off-white); }
+        .cowork-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 20px; }
+        .cowork-card { background: #fff; border-radius: 14px; padding: 28px 24px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+        .cowork-card .icon { font-size: 28px; margin-bottom: 12px; }
+        .cowork-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .cowork-card p { font-size: 14px; line-height: 1.55; color: var(--text-secondary); }
+        .cowork-meta { margin-top: 32px; background: linear-gradient(135deg, var(--accent), var(--purple)); border-radius: 14px; padding: 28px 32px; color: #fff; }
+        .cowork-meta h4 { font-size: 16px; font-weight: 650; margin-bottom: 8px; }
+        .cowork-meta p { font-size: 14px; line-height: 1.6; opacity: 0.85; }
+
+        /* ── Roadmap ── */
+        .roadmap-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 20px; }
+        .roadmap-card { background: #fff; border-radius: 14px; padding: 28px 24px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: transform 0.2s ease; }
+        .roadmap-card:hover { transform: translateY(-3px); }
+        .roadmap-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 14px; }
+        .badge-live { background: #e8f5e9; color: #2e7d32; }
+        .badge-join { background: #e8f5e9; color: #2e7d32; }
+        .badge-beta { background: #e3f2fd; color: #1565c0; }
+        .badge-coming { background: #fff3e0; color: #e65100; }
+        .badge-new { background: #fce4ec; color: #c62828; }
+        .roadmap-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .roadmap-card p { font-size: 14px; line-height: 1.55; color: var(--text-secondary); }
+
+        /* ── Resources ── */
+        .resources-section { background: linear-gradient(160deg, #0a0e27 0%, #1a1f4e 50%, #2a2070 100%); color: #fff; }
+        .resources-section .section-eyebrow { color: var(--gold); }
+        .resources-section .section-title { color: #fff; }
+        .resources-section .section-desc { color: rgba(255,255,255,0.6); }
+        .resources-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 20px; }
+        .resource-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 28px 24px; text-align: center; }
+        .resource-card .icon { font-size: 36px; margin-bottom: 14px; }
+        .resource-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .resource-card p { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.6); }
+
+        /* ── GleanGO ── */
+        .gleango-section { background: var(--off-white); text-align: center; }
+        .gleango-card { margin-top: 40px; background: linear-gradient(135deg, var(--navy), #1a1f4e); border-radius: 20px; padding: 48px 40px; color: #fff; box-shadow: 0 8px 32px rgba(10,14,39,0.2); }
+        .gleango-card h3 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        .gleango-card .date { font-size: 16px; color: var(--accent-light); font-weight: 500; margin-bottom: 16px; }
+        .gleango-card p { font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.65); max-width: 520px; margin: 0 auto; }
+        .gleango-card .location { margin-top: 20px; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+
+        /* ── Community ── */
+        .community-section { padding: 80px 24px; }
+        .community-callout { margin-top: 32px; font-size: 17px; line-height: 1.65; color: var(--text-secondary); max-width: 640px; }
+        .people-grid { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; }
+        .person-chip { background: var(--off-white); border: 1px solid var(--border); border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 500; color: var(--text); }
+
+        /* ── Closing ── */
+        .closing { text-align: center; padding: 100px 24px 120px; }
+        .closing-emoji { font-size: 48px; margin-bottom: 20px; }
+        .closing h2 { font-size: clamp(24px,4vw,36px); font-weight: 700; margin-bottom: 16px; }
+        .closing p { font-size: 17px; line-height: 1.65; color: var(--text-secondary); max-width: 520px; margin: 0 auto; }
+        .signature { margin-top: 36px; font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+        .signature strong { display: block; color: var(--text); font-size: 15px; }
+
+        /* ── Scroll animations ── */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── Print ── */
+        @media print {
+            body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+            @page { margin: 0.75in; size: letter; }
+            section, .stat-card, .agent-card, .roadmap-card, .timeline-item, .hackathon-callout, .gleango-card, .cowork-card, .resource-card { break-inside: avoid; page-break-inside: avoid; }
+            .reveal { opacity: 1 !important; transform: none !important; }
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .hero-arrow { display: none !important; }
+            .hero { min-height: auto; padding: 60px 24px; }
+        }
+
+        @media (max-width: 640px) {
+            section { padding: 64px 20px; }
+            .stats-grid { grid-template-columns: repeat(2,1fr); gap: 16px; }
+            .stat-number { font-size: 34px; }
+            .agents-highlight, .cowork-grid, .resources-grid { grid-template-columns: 1fr; }
+            .roadmap-grid { grid-template-columns: 1fr; }
+            .gleango-card { padding: 32px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-eyebrow">CoreWeave × Glean</div>
+        <h1>A Year of <span>Partnership</span></h1>
+        <p class="hero-sub">From launch to renewal — a look back at the milestones, the moments, and the momentum we've built together.</p>
+        <div class="hero-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+    </div>
+</section>
+
+<!-- ═══════ INTRO ═══════ -->
+<section class="intro">
+    <div class="container reveal">
+        <div class="intro-text">
+            <p>Sandy, Taj, Rupesh, Stacy, Ujjwal, Parag, Sofia — and the entire CoreWeave team —</p>
+            <p>As we kick off this next chapter together, we want to pause and say something simple: <strong>thank you.</strong></p>
+            <p>Thank you for trusting Glean early. Thank you for challenging us. Thank you for championing what AI can do inside a company that's scaling as fast as CoreWeave. This partnership hasn't just been a contract — it's been a collaboration that has made both of our teams better.</p>
+            <p>We put this together to celebrate what we've accomplished in our first year and share a glimpse of what's ahead. Enjoy the ride.</p>
+        </div>
+        <div class="intro-names">With gratitude,<br><strong>Your Glean Team</strong></div>
+    </div>
+</section>
+
+<!-- ═══════ BY THE NUMBERS ═══════ -->
+<section>
+    <div class="container">
+        <div class="reveal">
+            <div class="section-eyebrow">By the Numbers</div>
+            <div class="section-title">The Impact So Far</div>
+            <div class="section-desc">From zero to enterprise-wide adoption — CoreWeave's Glean usage tells a remarkable story of a team that leans into AI.</div>
+        </div>
+        <div class="stats-grid reveal">
+            <div class="stat-card">
+                <div class="stat-number">2,447</div>
+                <div class="stat-label">Monthly Active Users</div>
+                <div class="stat-detail">↑ 19.8% from last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">1,921</div>
+                <div class="stat-label">Weekly Active Users</div>
+                <div class="stat-detail">↑ 5.9% week over week</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">200+</div>
+                <div class="stat-label">Agents Built</div>
+                <div class="stat-detail">And growing every day</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Data Sources Connected</div>
+                <div class="stat-detail">Confluence · GDrive · Slack · Jira & more</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">1,765</div>
+                <div class="stat-label">Chat MAUs</div>
+                <div class="stat-detail">Deep engagement with AI Assistant</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">44%</div>
+                <div class="stat-label">Daily Stickiness</div>
+                <div class="stat-detail">DAU/MAU — better than median</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ TIMELINE ═══════ -->
+<section class="timeline-section">
+    <div class="container">
+        <div class="reveal">
+            <div class="section-eyebrow">Our Journey</div>
+            <div class="section-title">Milestones That Matter</div>
+            <div class="section-desc">A timeline of the moments that defined year one.</div>
+        </div>
+        <div class="timeline reveal">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Spring 2025</div>
+                <div class="timeline-title"><span class="timeline-emoji">🚀</span> Glean Goes Live at CoreWeave</div>
+                <div class="timeline-desc">Deployment kicked off and CoreWeave was up and running in under 60 days — fast even by Glean standards.</div>
+            </div>
+            <div class="timeline-item highlight">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">May 20, 2025</div>
+                <div class="timeline-title"><span class="timeline-emoji">🎤</span> Sandy Takes the Stage at Glean:GO</div>
+                <div class="timeline-desc">Sandy Venugopal joined the afternoon keynote at Glean's inaugural user conference in San Francisco — sharing the stage with the CEOs of Workday, Palo Alto Networks, and Snowflake, the SVP & CIO of Databricks, and Head of IT at Uber. A standing-room-only highlight.</div>
+            </div>
+            <div class="timeline-item highlight">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">September 2025</div>
+                <div class="timeline-title"><span class="timeline-emoji">🏢</span> On-Site at CoreWeave's Company All-Hands — Atlanta</div>
+                <div class="timeline-desc">Taj led a tech breakout session alongside Alex Peck that featured Glean — giving the broader CoreWeave team hands-on exposure to what the platform can do. The energy was electric.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">November 2025</div>
+                <div class="timeline-title"><span class="timeline-emoji">☕</span> Mason & Taj — The NYC Coffee Walk</div>
+                <div class="timeline-desc">Over coffee in New York, Taj shared CoreWeave's vision for their 125+ high-ROI strategy and how Glean fits into it. The kind of conversation that shapes the next chapter of a partnership.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">December 2025</div>
+                <div class="timeline-title"><span class="timeline-emoji">📊</span> Executive Business Review</div>
+                <div class="timeline-desc">Sandy, Taj, and the Glean team came together for a comprehensive EBR — reviewing adoption, aligning on the 90-day roadmap, and mapping the path toward making agents the primary way CoreWeave teams interact with Glean.</div>
+            </div>
+            <div class="timeline-item highlight">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">Q1 2026</div>
+                <div class="timeline-title"><span class="timeline-emoji">🤝</span> Renewal — Here's to Year Two</div>
+                <div class="timeline-desc">CoreWeave renewed and expanded the partnership. A powerful signal that the value is real, the adoption is strong, and the best is still ahead.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ AGENTS ═══════ -->
+<section class="agents-section">
+    <div class="container">
+        <div class="reveal">
+            <div class="section-eyebrow">Agents in Action</div>
+            <div class="section-title">200+ Agents Built and Counting</div>
+            <div class="section-desc">CoreWeave hasn't just adopted Glean — you've become one of our most innovative agent builders.</div>
+        </div>
+        <div class="agents-highlight reveal">
+            <div class="agent-card">
+                <div class="agent-icon">🔍</div>
+                <h4>Enterprise Search</h4>
+                <p>With 20+ data sources connected — from Confluence and GDrive to Slack and Jira — your team finds answers across all of CoreWeave's knowledge in seconds.</p>
+            </div>
+            <div class="agent-card">
+                <div class="agent-icon">🤖</div>
+                <h4>Ask-IT Slackbot — Live</h4>
+                <p>Sofia and the team launched the Ask-IT agent directly in Slack — handling internal IT support, reducing FreshService ticket volume, and giving employees instant answers where they already work. A widely successful and positively received debut.</p>
+            </div>
+            <div class="agent-card">
+                <div class="agent-icon">📊</div>
+                <h4>Accounting Agent — Launching This Month</h4>
+                <p>The accounting team is spinning up their own dedicated Glean agent this month — bringing AI-powered automation to finance workflows. Another department, another use case, another team that's all in.</p>
+            </div>
+            <div class="agent-card">
+                <div class="agent-icon">⚡</div>
+                <h4>Workflow Automation</h4>
+                <p>From engineering ops with Robin's Backstage catalog agent to cross-functional processes with Parag's FreshService integrations — agents are the connective tissue keeping CoreWeave moving at the speed of AI infrastructure.</p>
+            </div>
+        </div>
+        <div class="hackathon-callout reveal">
+            <h4>🎉 Congratulations on This Week's Hackathon!</h4>
+            <p>Huge shoutout to Taj and the entire CoreWeave team for running a hackathon this week. The energy and innovation your team brings to building with AI is exactly what this partnership is about. We can't wait to see what came out of it.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ COWORK SNEAK PEEK ═══════ -->
+<section class="cowork-section">
+    <div class="container">
+        <div class="reveal">
+            <div class="section-eyebrow">🔴 Code Red — Shipping Now</div>
+            <div class="section-title">What's Coming Next from Glean</div>
+            <div class="section-desc">You've heard the noise around AI coworking tools. Here's what Glean is shipping right now that goes way beyond chat — built for teams exactly like yours.</div>
+        </div>
+        <div class="cowork-grid reveal">
+            <div class="cowork-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, #0a0e27, #1a1f4e); color: #fff; border: 1px solid rgba(79,109,245,0.3);">
+                <div class="icon">🖥️</div>
+                <h4 style="font-size: 20px;">Computer Use</h4>
+                <p style="color: rgba(255,255,255,0.7); font-size: 15px; line-height: 1.7;">Glean is building a <strong style="color:#fff;">desktop app bridge</strong> that exposes your local terminal and filesystem directly to Assistant. Point it at a local repo and cowork on files — like Claude Code, but with all of Glean's enterprise context behind it. Imagine CoreWeave engineers debugging locally while Glean automatically pulls in the relevant Confluence runbook and Jira context. One conversation, full stack awareness.</p>
+            </div>
+            <div class="cowork-card">
+                <div class="icon">🌐</div>
+                <h4>Browser Use</h4>
+                <p>Glean will be able to <strong>navigate the browser, click through apps, and take actions</strong> across the long tail of tools that don't have APIs or connectors. For CoreWeave with all your bespoke internal tooling, this closes the gap on stuff that no connector will ever cover.</p>
+            </div>
+            <div class="cowork-card">
+                <div class="icon">🧩</div>
+                <h4>MCP Everywhere</h4>
+                <p>Glean's MCP server already works inside <strong>Claude Code, Cursor, Windsurf, Codex, VS Code, and JetBrains</strong> — but the bigger play is Glean as an <strong>MCP host</strong> too. Glean Agents can call out to any remote MCP server. Your knowledge flows into dev tools, AND external tools flow into Glean agents. Both directions.</p>
+            </div>
+            <div class="cowork-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, #1a1040, #2a2070); color: #fff; border: 1px solid rgba(124,92,252,0.3);">
+                <div class="icon">🎨</div>
+                <h4 style="font-size: 20px;">Interactive HTML Apps in Canvas</h4>
+                <p style="color: rgba(255,255,255,0.7); font-size: 15px; line-height: 1.7;">This is the wow factor. Ask Glean to build something and it <strong style="color:#fff;">scaffolds a full interactive web app right in Canvas</strong> — dashboards, data explorers, calculators, project boards — all wired to enterprise data. Not a static doc, not a PDF — a real working mini-app you can share and embed. Your GTM team could say "build me a pipeline dashboard from Salesforce" and get a live interactive thing back.</p>
+            </div>
+        </div>
+        <div class="cowork-meta reveal">
+            <h4>🛠️ Proof point: This page was built using Glean</h4>
+            <p>Mason built this entire interactive site in a single Glean conversation — it searched across Sigma, Salesforce, Slack, and Google Docs, pulled CoreWeave's real adoption data, and generated this HTML page as a live artifact. No code editor, no designer. That's the kind of coworking we're talking about.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ ROADMAP ═══════ -->
+<section>
+    <div class="container">
+        <div class="reveal">
+            <div class="section-eyebrow">What's Ahead</div>
+            <div class="section-title">Coming to Your Glean Experience</div>
+            <div class="section-desc">Year two is going to be even bigger. Here's a preview of what's on the roadmap — including betas you can join today.</div>
+        </div>
+        <div class="roadmap-grid reveal">
+            <div class="roadmap-card">
+                <span class="roadmap-badge badge-join">🟢 Beta — Join Now</span>
+                <h4>Agents in Slack DM Sidebar</h4>
+                <p>Access Glean Assistant and your custom agents directly from the Slack sidebar — no context switching. Browse agents, pick a response mode (Fast or Thinking), and chat without leaving your workspace.</p>
+            </div>
+            <div class="roadmap-card">
+                <span class="roadmap-badge badge-join">🟢 Beta — Join Now</span>
+                <h4>Public Mode in Slack Channels</h4>
+                <p>Glean proactively shares trusted answers in Slack channels based on your public knowledge corpus. Your Ask-IT bot could get even smarter with this one.</p>
+            </div>
+            <div class="roadmap-card">
+                <span class="roadmap-badge badge-live">✅ Live</span>
+                <h4>Agent Sandbox (AFS)</h4>
+                <p>A cloud-based sandbox where Glean's agent engine can run code, analyze data, generate visualizations, and produce rich interactive dashboards — all grounded in your enterprise data.</p>
+            </div>
+            <div class="roadmap-card">
+                <span class="roadmap-badge badge-coming">In Development</span>
+                <h4>Agent Governance (ADLC)</h4>
+                <p>Enterprise-grade agent lifecycle management — versioning, eval sets, approval workflows, draft & publish, and full traceability for agents running in production.</p>
+            </div>
+            <div class="roadmap-card">
+                <span class="roadmap-badge badge-beta">Beta</span>
+                <h4>Auto Mode & Agent Orchestration</h4>
+                <p>Autonomous agents that plan, reason, adapt, and execute complex multi-step workflows. Plus agent-to-agent communication via Google's A2A protocol — a true agent mesh.</p>
+            </div>
+            <div class="roadmap-card">
+                <span class="roadmap-badge badge-live">✅ Live</span>
+                <h4>MCP Host in Assistant & Agents</h4>
+                <p>Connect Glean to any third-party MCP server. Your agents can now use tools from across the ecosystem — Asana, ClickUp, custom internal servers, and more.</p>
+            </div>
+            <div class="roadmap-card">
+                <span class="roadmap-badge badge-coming">Coming Soon</span>
+                <h4>Proactive AI Assistant</h4>
+                <p>Glean evolves from reactive to proactive — surfacing to-dos, recommending next actions, and anticipating needs based on your enterprise context.</p>
+            </div>
+            <div class="roadmap-card">
+                <span class="roadmap-badge badge-live">✅ Live</span>
+                <h4>Insights Chat for Admins</h4>
+                <p>Ask questions about your Glean deployment in natural language. "How many users ran agents last week?" — and get instant analytics. Taj, this one's for you.</p>
+            </div>
+            <div class="roadmap-card">
+                <span class="roadmap-badge badge-coming">Coming Soon</span>
+                <h4>Analytics API for Agent Stats</h4>
+                <p>Programmatic access to agent run metrics, user counts, department breakdowns — everything your team needs to consolidate agent metrics via API. Kenji and the team asked, we're building it.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ NEW RESOURCES ═══════ -->
+<section class="resources-section">
+    <div class="container">
+        <div class="reveal">
+            <div class="section-eyebrow">Investing in You</div>
+            <div class="section-title">New Post-Sales Resources for CoreWeave</div>
+            <div class="section-desc">As part of your renewal, we're significantly expanding the Glean team dedicated to CoreWeave's success.</div>
+        </div>
+        <div class="resources-grid reveal">
+            <div class="resource-card">
+                <div class="icon">🎯</div>
+                <h4>AI Outcomes Manager (AIOM)</h4>
+                <p>A dedicated partner focused on driving adoption, building and optimizing agents, running enablement sessions, and ensuring every department at CoreWeave is getting maximum value from Glean.</p>
+            </div>
+            <div class="resource-card">
+                <div class="icon">🛡️</div>
+                <h4>Dedicated Support Engineer</h4>
+                <p>A named technical support engineer who knows CoreWeave's environment inside and out. Faster triage, deeper context on every ticket, and a direct line when things need to move quickly.</p>
+            </div>
+            <div class="resource-card">
+                <div class="icon">🔧</div>
+                <h4>Delivery Excellence Manager (DEM)</h4>
+                <p>Your go-to for platform deployment, connector configuration, admin training, and technical project management. They'll own the implementation roadmap so nothing falls through the cracks.</p>
+            </div>
+            <div class="resource-card" style="grid-column: 1 / -1; background: rgba(245,197,66,0.12); border: 1px solid rgba(245,197,66,0.25);">
+                <div class="icon">🔬</div>
+                <h4>Product Insider Access</h4>
+                <p>We're bringing CoreWeave closer to our Product team. That means early access to private betas, sneak peeks at what's shipping next, and a seat at the table to help shape the features that matter most to your team. You'll be among the first to know — and the first to try.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ GLEAN:GO 2026 ═══════ -->
+<section class="gleango-section">
+    <div class="container">
+        <div class="reveal">
+            <div class="section-eyebrow">Save the Date</div>
+            <div class="section-title">Glean:GO 2026</div>
+        </div>
+        <div class="gleango-card reveal">
+            <h3>Glean:GO 2026</h3>
+            <div class="date">August 26 – 27, 2026</div>
+            <p>Our second annual user conference — bigger, bolder, and better. After Sandy brought the house down at Glean:GO 2025, we'd love nothing more than to have CoreWeave's leadership back on stage and in the room. Let's make it happen.</p>
+            <div class="location">📍 Fort Mason · San Francisco, CA</div>
+            <a href="https://www.glean.com/events/glean-go-2026" target="_blank" style="display:inline-block;margin-top:20px;padding:12px 28px;background:var(--accent-light);color:#0a0e27;font-weight:600;font-size:14px;border-radius:8px;text-decoration:none;letter-spacing:0.02em;transition:background 0.2s ease;">Learn More & Register →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ COMMUNITY ═══════ -->
+<section class="community-section">
+    <div class="container reveal">
+        <div class="section-eyebrow">It Takes a Village</div>
+        <div class="section-title">The People Behind the Partnership</div>
+        <div class="community-callout">
+            We know that many people across CoreWeave have been involved in making this partnership what it is — from deployment conversations and connector debugging to agent builds and feature requests. We want to acknowledge every one of you.
+        </div>
+        <div class="people-grid">
+            <div class="person-chip">Sandy Venugopal</div>
+            <div class="person-chip">Taj Singh</div>
+            <div class="person-chip">Rupesh Panchal</div>
+            <div class="person-chip">Stacy Archibald</div>
+            <div class="person-chip">Ujjwal Madan</div>
+            <div class="person-chip">Parag Hardas</div>
+            <div class="person-chip">Sofia Nicolau</div>
+            <div class="person-chip">Alex Peck</div>
+            <div class="person-chip">George Lozano</div>
+            <div class="person-chip">Robin H. Johnson</div>
+            <div class="person-chip">Jerry Beavers</div>
+            <div class="person-chip">Kenji Bierig</div>
+            <div class="person-chip">David Lee</div>
+            <div class="person-chip">Tod Lazarov</div>
+            <div class="person-chip">Derek Lee</div>
+            <div class="person-chip">Ben Dudley</div>
+            <div class="person-chip">Brett Cristino</div>
+            <div class="person-chip">Max Odenheimer</div>
+            <div class="person-chip">Vinay Yella</div>
+            <div class="person-chip">Ian Roxborough</div>
+            <div class="person-chip">Julie Richards</div>
+            <div class="person-chip">Dinesh Mokkapati</div>
+            <div class="person-chip">Alfredo Valdes</div>
+            <div class="person-chip">Ryan Vetro</div>
+            <div class="person-chip">Krisha Patel</div>
+            <div class="person-chip">Guillaume Destuynder</div>
+            <div class="person-chip">George Salcedo</div>
+            <div class="person-chip">Calvin Luu</div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ CLOSING ═══════ -->
+<section class="closing">
+    <div class="container reveal">
+        <div class="closing-emoji">💙</div>
+        <h2>Here's to Year Two</h2>
+        <p>Sandy, Taj, Rupesh, Stacy, Ujjwal, Parag, Sofia — and the hundreds of CoreWeave team members who use Glean every day. This partnership is one we're deeply proud of. You push us to be better, and together we're building something that genuinely makes work better.</p>
+        <p style="margin-top: 16px;">Thank you for believing in what we're building. The best is still ahead.</p>
+        <div class="signature">
+            <strong>Mason Beezley</strong>
+            On behalf of Trevor Gile and the Glean Team
+        </div>
+    </div>
+</section>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
